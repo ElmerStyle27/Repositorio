@@ -32,7 +32,7 @@ public class Principal {
             DefaultTableModel model = (DefaultTableModel) ta.getModel();
             model.setRowCount(0);//incializa la tabla desde la fila 0
             try (
-                    Connection conn = DriverManager.getConnection(conexion.dbURL, conexion.user, conexion.pass);
+                  //  Connection conn = DriverManager.getConnection(conexion.dbURL, conexion.user, conexion.pass);
                     Statement comando = conn.createStatement()) {
                 String sql = "select * from registros";
                 ResultSet resultado = comando.executeQuery(sql);
@@ -58,7 +58,7 @@ public class Principal {
         try {
             Statement st;
             Class.forName("org.postgresql.Driver");
-            Connection conn = DriverManager.getConnection(conexion.dbURL, conexion.user, conexion.pass);
+           // Connection conn = DriverManager.getConnection(conexion.dbURL, conexion.user, conexion.pass);
             String instruccion = "delete from registros where nombre='" + nom + "'";
             //CallableStatement acc = conn.prepareCall(instruccion);
             PreparedStatement acc = conn.prepareStatement(instruccion);
@@ -76,7 +76,7 @@ public class Principal {
 
             Statement st;
             Class.forName("org.postgresql.Driver");
-            Connection conn = DriverManager.getConnection(conexion.dbURL, conexion.user, conexion.pass);
+           // Connection conn = DriverManager.getConnection(conexion.dbURL, conexion.user, conexion.pass);
 
             st = conn.createStatement();
             String tsql = "INSERT INTO registros(nombre, edad, color, deporte) values ('"
@@ -97,7 +97,7 @@ public class Principal {
         try {
             Statement st;
             Class.forName("org.postgresql.Driver");
-            Connection conn = DriverManager.getConnection(conexion.dbURL, conexion.user, conexion.pass);
+           // Connection conn = DriverManager.getConnection(conexion.dbURL, conexion.user, conexion.pass);
 
             String instruccion = "update registros set " + "edad=?," + "color=?," + " deporte=?" + " where nombre='" + nom + "'";
             //String instruccion = "exec Insertar '" + CajaDeporte.getText() + "'";
