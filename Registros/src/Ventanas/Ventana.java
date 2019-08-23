@@ -14,7 +14,7 @@ import static javafx.application.Application.launch;
 import javafx.stage.Stage;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-//MOdificado de PC-23
+//MOdificado de PC-23 Otra vez
 public class Ventana extends javax.swing.JFrame {
 
     String nombreAnti = "";
