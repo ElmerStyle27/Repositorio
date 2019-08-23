@@ -64,7 +64,7 @@ public class Principal {
             PreparedStatement acc = conn.prepareStatement(instruccion);
             acc.executeUpdate();
             JOptionPane.showMessageDialog(null, "Registro Eliminado");
-            conn.close();
+            //conn.close();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error al eliminar" + e);
         }
@@ -87,7 +87,7 @@ public class Principal {
 
             st.execute(tsql);
             JOptionPane.showMessageDialog(null, "Registro Insertado");
-            conn.close();
+         //   conn.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
