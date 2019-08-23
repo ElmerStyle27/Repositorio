@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp spec="1.0" xmlns:jfx="http://javafx.com" href="Registros.jnlp">
+  <information>
+    <title>Registros</title>
+    <vendor>tere</vendor>
+    <description>null</description>
+    <offline-allowed/>
+  </information>
+  <resources>
+    <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
+    <jar href="Registros.jar" size="15232" download="eager" />
+    <jar href="lib/AbsoluteLayout.jar" size="2903" download="eager" />
+    <jar href="lib/postgresql-42.2.6.jar" size="842825" download="eager" />
+    <jar href="lib/postgresql-9.4.1209.jar" size="678049" download="eager" />
+  </resources>
+  <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="Registros" >
+    <param name="requiredFXVersion" value="8.0+"/>
+  </applet-desc>
+  <jfx:javafx-desc  width="800" height="600" main-class="Principal.Registros"  name="Registros" />
+  <update check="always"/>
+</jnlp>
