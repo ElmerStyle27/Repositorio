@@ -8,7 +8,7 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="Registros.jar" size="14989" download="eager" />
+    <jar href="Registros.jar" size="15112" download="eager" />
     <jar href="lib/AbsoluteLayout.jar" size="2903" download="eager" />
     <jar href="lib/postgresql-42.2.6.jar" size="842825" download="eager" />
     <jar href="lib/postgresql-9.4.1209.jar" size="678049" download="eager" />
