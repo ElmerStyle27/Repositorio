@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 //MOdificado de PC-23 Otra vez
+
 public class Ventana extends javax.swing.JFrame {
 
     String nombreAnti = "";
@@ -26,8 +27,7 @@ public class Ventana extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         setResizable(false);
 
-        new Principal().Consultar(ta);
-
+        // new Principal().Consultar(ta);
     }
 
     @SuppressWarnings("unchecked")
@@ -127,6 +127,11 @@ public class Ventana extends javax.swing.JFrame {
         jLabel5.setText("Nombre");
 
         btnbuscar.setText("Buscar");
+        btnbuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnbuscarActionPerformed(evt);
+            }
+        });
 
         btnhistorial.setText("Historial");
         btnhistorial.addActionListener(new java.awt.event.ActionListener() {
@@ -245,7 +250,7 @@ public class Ventana extends javax.swing.JFrame {
         de = t4.getText();
         new Principal().Registrar(nom, ed, co, de);
         Limpiar();
-        new Principal().Consultar(ta);
+        // new Principal().Consultar(ta);
     }
 
     public void Modificar() {
@@ -256,20 +261,20 @@ public class Ventana extends javax.swing.JFrame {
         de = t4.getText();
         new Principal().Update(nom, ed, co, de);
         Limpiar();
-        new Principal().Consultar(ta);
+        // new Principal().Consultar(ta);
     }
-    
+
     private void updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateActionPerformed
         Modificar();
         Limpiar();
-        new Principal().Consultar(ta);
+        // new Principal().Consultar(ta);
     }//GEN-LAST:event_updateActionPerformed
 
     private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
         String nom = t1.getText();
         new Principal().Eliminar(nom);
         Limpiar();
-        new Principal().Consultar(ta);
+        // new Principal().Consultar(ta);
     }//GEN-LAST:event_deleteActionPerformed
 
     private void t1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_t1ActionPerformed
@@ -277,8 +282,17 @@ public class Ventana extends javax.swing.JFrame {
     }//GEN-LAST:event_t1ActionPerformed
 
     private void btnhistorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnhistorialActionPerformed
-        // TODO add your handling code here:
+        new Historial().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnhistorialActionPerformed
+
+    private void btnbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbuscarActionPerformed
+        ConsultaFiltrada();
+    }//GEN-LAST:event_btnbuscarActionPerformed
+
+    public void ConsultaFiltrada() {
+        new Principal().Consultar(ta, txtnombrebuscar.getText());
+    }
 
     public void Limpiar() {
         t1.setText(null);

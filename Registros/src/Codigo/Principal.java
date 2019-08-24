@@ -5,6 +5,7 @@
  */
 package Codigo;
 //MOdificado
+
 import Conexion.conexion;
 import Conexion.conexion1;
 import java.sql.CallableStatement;
@@ -26,15 +27,15 @@ public class Principal {
 
     Connection conn = conexion1.getConexion();
 
-    public void Consultar(JTable ta) {
+    public void Consultar(JTable ta, String nom) {
         try {
             Class.forName("org.postgresql.Driver");
             DefaultTableModel model = (DefaultTableModel) ta.getModel();
             model.setRowCount(0);//incializa la tabla desde la fila 0
             try (
-                  //  Connection conn = DriverManager.getConnection(conexion.dbURL, conexion.user, conexion.pass);
+                    //  Connection conn = DriverManager.getConnection(conexion.dbURL, conexion.user, conexion.pass);
                     Statement comando = conn.createStatement()) {
-                String sql = "select * from registros";
+                String sql = "select * from registros where nombre ='" + nom + "'";
                 ResultSet resultado = comando.executeQuery(sql);
                 while (resultado.next()) {
                     Vector v = new Vector();
@@ -58,7 +59,7 @@ public class Principal {
         try {
             Statement st;
             Class.forName("org.postgresql.Driver");
-           // Connection conn = DriverManager.getConnection(conexion.dbURL, conexion.user, conexion.pass);
+            // Connection conn = DriverManager.getConnection(conexion.dbURL, conexion.user, conexion.pass);
             String instruccion = "delete from registros where nombre='" + nom + "'";
             //CallableStatement acc = conn.prepareCall(instruccion);
             PreparedStatement acc = conn.prepareStatement(instruccion);
@@ -76,18 +77,22 @@ public class Principal {
 
             Statement st;
             Class.forName("org.postgresql.Driver");
-           // Connection conn = DriverManager.getConnection(conexion.dbURL, conexion.user, conexion.pass);
+            // Connection conn = DriverManager.getConnection(conexion.dbURL, conexion.user, conexion.pass);
 
             st = conn.createStatement();
-            String tsql = "INSERT INTO registros(nombre, edad, color, deporte) values ('"
-                    + nom + "', "
+//            String tsql = "INSERT INTO registros(nombre, edad, color, deporte) values ('"
+//                    + nom + "', "
+//                    + Integer.valueOf(ed) + ", '"
+//                    + co + "', '"
+//                    + de + "');";
+            String tsql = "{call Insertar ('" + nom + "', "
                     + Integer.valueOf(ed) + ", '"
                     + co + "', '"
-                    + de + "');";
+                    + de + "')};";
 
             st.execute(tsql);
             JOptionPane.showMessageDialog(null, "Registro Insertado");
-         //   conn.close();
+            //   conn.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -97,7 +102,7 @@ public class Principal {
         try {
             Statement st;
             Class.forName("org.postgresql.Driver");
-           // Connection conn = DriverManager.getConnection(conexion.dbURL, conexion.user, conexion.pass);
+            // Connection conn = DriverManager.getConnection(conexion.dbURL, conexion.user, conexion.pass);
 
             String instruccion = "update registros set " + "edad=?," + "color=?," + " deporte=?" + " where nombre='" + nom + "'";
             //String instruccion = "exec Insertar '" + CajaDeporte.getText() + "'";
