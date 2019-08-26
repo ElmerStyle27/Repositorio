@@ -5,9 +5,16 @@
  */
 package Ventanas;
 
+import Conexion.conexion1;
+import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -15,13 +22,14 @@ import java.util.logging.Logger;
  */
 public class Historial extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Historial
-     */
+     Connection conn = conexion1.getConexion();
+    
     public Historial() {
         initComponents();
         setLocationRelativeTo(null);
         setResizable(false);
+        
+        ConsultarHisto();
     }
 
     /**
@@ -45,7 +53,7 @@ public class Historial extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Nombre", "Edad", "Color", "Deporte"
+                "Nombre", "Edad", "Color", "Deporte", "Estatus"
             }
         ));
         jScrollPane1.setViewportView(tablehistorial);
@@ -64,18 +72,18 @@ public class Historial extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(37, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 573, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(34, 34, 34))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btnregresar)
-                        .addGap(274, 274, 274))))
-            .addGroup(layout.createSequentialGroup()
                 .addGap(297, 297, 297)
                 .addComponent(jLabel1)
                 .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(29, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnregresar)
+                        .addGap(274, 274, 274))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 581, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(34, 34, 34))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -92,6 +100,35 @@ public class Historial extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public void ConsultarHisto() {
+        try {
+            Class.forName("org.postgresql.Driver");
+            DefaultTableModel model = (DefaultTableModel) tablehistorial.getModel();
+            model.setRowCount(0);//incializa la tabla desde la fila 0
+            try (
+                    //  Connection conn = DriverManager.getConnection(conexion.dbURL, conexion.user, conexion.pass);
+                    Statement comando = conn.createStatement()) {
+                String sql = "select * from historial order by estatus";
+                ResultSet resultado = comando.executeQuery(sql);
+                while (resultado.next()) {
+                    Vector v = new Vector();
+                    v.add(resultado.getString(1));
+                    v.add(resultado.getString(2));
+                    v.add(resultado.getString(3));
+                    v.add(resultado.getString(4));
+                    v.add(resultado.getString(5));
+                    model.addRow(v);
+
+                    tablehistorial.setModel(model);
+                }
+                resultado.close();
+            }
+        } catch (Exception e) {
+            System.out.println("Error de conexion 10000" + e.getMessage());
+        }
+    }
+    
+    
     private void btnregresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnregresarActionPerformed
         try {
             new Ventana().setVisible(true);
