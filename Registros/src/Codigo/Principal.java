@@ -37,7 +37,7 @@ public class Principal {
             try (
                     //  Connection conn = DriverManager.getConnection(conexion.dbURL, conexion.user, conexion.pass);
                     Statement comando = conn.createStatement()) {
-                String sql = "select * from registros where nombre ='" + nom + "'";
+                String sql = "select * from registros where nombre like '%" + nom + "%'";
                 ResultSet resultado = comando.executeQuery(sql);
                 while (resultado.next()) {
                     Vector v = new Vector();
