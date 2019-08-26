@@ -8,6 +8,7 @@ package Codigo;
 
 import Conexion.conexion;
 import Conexion.conexion1;
+import Ventanas.Ventana;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -26,6 +27,7 @@ import javax.swing.table.DefaultTableModel;
 public class Principal {
 
     Connection conn = conexion1.getConexion();
+    
 
     public void Consultar(JTable ta, String nom) {
         try {
@@ -54,16 +56,23 @@ public class Principal {
         }
     }
 
-    public void Eliminar(String nom) {
+    public void Eliminar(String nom, String ed, String co, String de) {
 
         try {
+            
             Statement st;
             Class.forName("org.postgresql.Driver");
             // Connection conn = DriverManager.getConnection(conexion.dbURL, conexion.user, conexion.pass);
-            String instruccion = "delete from registros where nombre='" + nom + "'";
+            String nom2, ed2, co2, de2;
+            CallableStatement cs = conn.prepareCall("select eliminar ('" + nom + "','"
+                    + Integer.valueOf(ed) + "','"
+                    + co + "','"
+                    + de + "');");
+
             //CallableStatement acc = conn.prepareCall(instruccion);
-            PreparedStatement acc = conn.prepareStatement(instruccion);
-            acc.executeUpdate();
+//            PreparedStatement acc = conn.prepareStatement(instruccion);
+//            acc.executeUpdate();
+            cs.executeQuery();
             JOptionPane.showMessageDialog(null, "Registro Eliminado");
             //conn.close();
         } catch (Exception e) {
@@ -85,12 +94,13 @@ public class Principal {
 //                    + Integer.valueOf(ed) + ", '"
 //                    + co + "', '"
 //                    + de + "');";
-            String tsql = "{call Insertar ('" + nom + "', "
+            //String tsql = 
+            CallableStatement cs = conn.prepareCall("select insertar ('" + nom + "', "
                     + Integer.valueOf(ed) + ", '"
                     + co + "', '"
-                    + de + "')};";
+                    + de + "');");
 
-            st.execute(tsql);
+            cs.executeQuery();
             JOptionPane.showMessageDialog(null, "Registro Insertado");
             //   conn.close();
         } catch (Exception e) {
@@ -98,22 +108,23 @@ public class Principal {
         }
     }
 
-    public void Update(String nom, String ed, String co, String de) {
+    public void Update(String Nom2, String ed2, String co2, String de2, String nom, String ed, String co, String de) {
         try {
             Statement st;
             Class.forName("org.postgresql.Driver");
             // Connection conn = DriverManager.getConnection(conexion.dbURL, conexion.user, conexion.pass);
 
-            String instruccion = "update registros set " + "edad=?," + "color=?," + " deporte=?" + " where nombre='" + nom + "'";
-            //String instruccion = "exec Insertar '" + CajaDeporte.getText() + "'";
-            PreparedStatement act = conn.prepareStatement(instruccion);
+            //String instruccion = "update registros set " + "edad=?," + "color=?," + " deporte=?" + " where nombre='" + nom + "'";
+            CallableStatement cs = conn.prepareCall("select modificar ('" + Nom2 + "',"+  Integer.valueOf(ed2) + ",'" +co2+"','"+de2+"','"+ nom + "',"+  Integer.valueOf(ed) + ",'" +co+"','"+de+"');");
+            //PreparedStatement act = conn.prepareStatement(instruccion);)
+            cs.executeQuery();
             int eda = Integer.valueOf(ed);
 
-            act.setInt(1, eda);
-            act.setString(2, co);
-            act.setString(3, de);
-
-            act.executeUpdate();
+//            act.setInt(1, eda);
+//            act.setString(2, co);
+//            act.setString(3, de);
+//
+//            act.executeUpdate();
             JOptionPane.showMessageDialog(null, "Registro actualizado ");
 
         } catch (Exception e) {

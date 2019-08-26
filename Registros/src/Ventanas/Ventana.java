@@ -21,6 +21,7 @@ public class Ventana extends javax.swing.JFrame {
     String nombreAnti = "";
     conexion co = new conexion();
     Principal p;
+    public static String Nom2, ed2, co2, de2;
 
     public Ventana() throws SQLException {
         initComponents();
@@ -233,7 +234,11 @@ public class Ventana extends javax.swing.JFrame {
         t2.setText((String) ta.getValueAt(ta.getSelectedRow(), 1));
         t3.setText((String) ta.getValueAt(ta.getSelectedRow(), 2));
         t4.setText((String) ta.getValueAt(ta.getSelectedRow(), 3));
-
+        Nom2=t1.getText();
+        ed2=t2.getText();
+        co2=t3.getText();
+        de2=t4.getText();
+        
         nombreAnti = t1.getText();
     }//GEN-LAST:event_taMouseClicked
 
@@ -259,7 +264,7 @@ public class Ventana extends javax.swing.JFrame {
         ed = t2.getText();
         co = t3.getText();
         de = t4.getText();
-        new Principal().Update(nom, ed, co, de);
+        new Principal().Update(Nom2, ed2, co2, de2, nom, ed, co, de);
         Limpiar();
         // new Principal().Consultar(ta);
     }
@@ -271,8 +276,12 @@ public class Ventana extends javax.swing.JFrame {
     }//GEN-LAST:event_updateActionPerformed
 
     private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
+        
         String nom = t1.getText();
-        new Principal().Eliminar(nom);
+        String ed = t2.getText();
+        String co = t3.getText();
+        String de = t4.getText();
+        new Principal().Eliminar(nom,ed,co,de);
         Limpiar();
         // new Principal().Consultar(ta);
     }//GEN-LAST:event_deleteActionPerformed
