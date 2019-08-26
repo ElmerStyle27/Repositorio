@@ -11,6 +11,8 @@ import java.util.Properties;
 
     public class conexion1 {
      
+        //ESTOY EN EL EXAMEN
+        
         //Instancia estatica de la conexion, sino uno llega a existir
         public static Connection connection = null;
      
